@@ -20,8 +20,9 @@ function Navbar() {
 
   const handleLogout = () => {
 
-    alert("Conform")
-    logout();
+    if (!window.confirm("log out of your account?"))
+      return;
+      logout();
     navigate("/");
   };
 

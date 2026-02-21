@@ -12,6 +12,7 @@ import AdminDashBoard from "./Pages/AdminDashBoard";
 import ProfilePage from "./Pages/ProfilePage";
 import ProdectedRoute from "./ProdectedRoute/ProdectedRoute";
 import Career from "./Pages/Career";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -51,6 +52,14 @@ function App() {
 
         <Route path="/Profile" element={<ProfilePage />} />
       </Routes>
+      <ToastContainer
+       position="top-center"
+  autoClose={3000}
+  hideProgressBar={false}
+  newestOnTop
+  closeOnClick
+  pauseOnHover
+  theme="colored" />
     </BrowserRouter>
   );
 }

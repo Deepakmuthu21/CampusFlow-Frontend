@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 function MentorSection() {
   const [mentors, setMentors] = useState([]);
   const [status, setStatus] = useState(null);
@@ -30,7 +31,7 @@ function MentorSection() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(
+    const res=  await axios.put(
         `https://campus-folw-backend.onrender.com/api/user/update/${id}`,
         { status: newStatus },
         {
@@ -39,9 +40,10 @@ function MentorSection() {
           },
         },
       );
+      toast.success(res.data.message)
       fetchMentors();
     } catch (error) {
-      console.log(error);
+       toast.error(`${error.res?.data?.message}❗`);
     }
   };
 

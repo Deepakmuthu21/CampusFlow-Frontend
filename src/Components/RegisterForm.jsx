@@ -1,6 +1,7 @@
 import { data } from 'autoprefixer';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 
 function RegisterForm() {
   const [departments,setDepartments] =useState([])
@@ -53,18 +54,19 @@ const fetchDepartment = async()=>{
       alert("Please fill all fields");
       return;
     }
-
     try {
-      await axios.post("https://campus-folw-backend.onrender.com/api/user/register", {
-        ...formData,
-        role: "student",
-        status:"pending"
-      })
-  
+  const res = await axios.post(
+    "https://campus-folw-backend.onrender.com/api/user/register",
+    {
+      ...formData,
+      role: "student",
+      status: "pending"
+    }
+  );
 
-      alert("Registered Successfully ✅");
+  toast.success(`${res.data.message}✅`);   // ✅ Success
 
-      setFormData({
+  setFormData({
         name: "",
         email: "",
         password: "",
@@ -74,12 +76,13 @@ const fetchDepartment = async()=>{
        
         
       });
-    } catch (error) {
-      alert("Registration Failed ❌");
-      console.log(error);
-      
-    }
-  };
+
+} catch (error) {
+  toast.error(`${error.res?.data?.message}❗` || "Registration failed ❌");
+}
+
+  
+   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-r from-indigo-500 to-purple-600 p-4">

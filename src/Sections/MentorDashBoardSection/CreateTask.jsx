@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function CreateTask() {
    const [tasks, setTasks] = useState([]);
@@ -43,34 +44,35 @@ function CreateTask() {
     e.preventDefault();
 
     try {
-      await axios.post("https://campus-folw-backend.onrender.com/api/task/create-assignment",formData,{
+     const res=  await axios.post("https://campus-folw-backend.onrender.com/api/task/create-assignment",formData,{
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
 
       });
-      alert("Task Created Successfully!");
+      toast.success(res.data.msg);
       setFormData({ title: "", task: "", dueDate: "" });
       fetchTasks();
     } catch (error) {
-      console.log(error);
+             toast.error(`${error.res?.data?.message}❗`);
+      
     }
   };
 
   const handleDelete = async(id)=>{
     try {
-      await axios.delete(`https://campus-folw-backend.onrender.com/api/task/delete-assignment-mentor/${id}`,{
+     const res= await axios.delete(`https://campus-folw-backend.onrender.com/api/task/delete-assignment-mentor/${id}`,{
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
 
       });
-      alert("Task delete Successfully!");
+      toast.success(res.data.msg);
      
       fetchTasks();
       
     } catch (error) {
-      console.log(error);
+             toast.error(`${error.res?.data?.message}❗`);
     }
   }
 

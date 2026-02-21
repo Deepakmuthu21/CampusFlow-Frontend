@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 function ReviewSubmission() {
   const [submissions, setSubmissions] = useState([]);
@@ -41,7 +42,7 @@ function ReviewSubmission() {
   // Handle update (only remarks & grade)
   const handleUpdate = async (id, remarks, grade) => {
     try {
-      await axios.put(
+     const res= await axios.put(
         `https://campus-folw-backend.onrender.com/api/submit/evaluate-assignment/${id}`,
         {
           remarks,
@@ -54,10 +55,12 @@ function ReviewSubmission() {
         }
       );
 
-      alert("Updated Successfully!");
-      fetchSubmissions();
+            toast.success(res.data.msg);
+
+        fetchSubmissions();
+        
     } catch (error) {
-      console.log(error.response?.data);
+             toast.error(`${error.res?.data?.message}❗`);
     }
   };
 

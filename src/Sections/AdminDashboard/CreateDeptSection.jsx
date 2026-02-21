@@ -1,5 +1,6 @@
 import React,{ useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function CreateDeptSection() {
   const [departments, setDepartments] = useState([]);
@@ -53,15 +54,16 @@ function CreateDeptSection() {
     if (!window.confirm("Delete this department?")) return;
 
     try {
-      await axios.delete(`https://campus-folw-backend.onrender.com/api/department/delete/${id}`,{
+      const res = await axios.delete(`https://campus-folw-backend.onrender.com/api/department/delete/${id}`,{
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
 
       });
+      toast.success(res.data.message)
       fetchDepartments();
     } catch (error) {
-      console.log(error);
+       toast.error(`${error.res?.data?.message}❗`);
     }
   };
 

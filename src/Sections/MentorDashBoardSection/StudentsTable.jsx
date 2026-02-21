@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 
 function StudentsTable() {
    const [students, setStudents] = useState([]);
@@ -33,14 +34,17 @@ function StudentsTable() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`https://campus-folw-backend.onrender.com/api/user/update/${id}`,{status: newStatus}, {
+    const res =  await axios.put(`https://campus-folw-backend.onrender.com/api/user/update/${id}`,{status: newStatus}, {
           headers: {
           Authorization: `Bearer ${getToken()}`,
         },
       });
+      toast.success(res.data.msg);
       fetchStudents();
+                  
+
     } catch (error) {
-      console.log(error);
+             toast.error(`${error.res?.data?.message}❗`);
     }
   };
 
@@ -55,9 +59,11 @@ function StudentsTable() {
         },
 
       });
+            toast.success(res.data.msg);
+
       fetchStudents();
     } catch (error) {
-      console.log(error);
+             toast.error(`${error.res?.data?.message}❗`);
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthProvider";
+import { toast } from "react-toastify";
 
 function UserLoginForm() {
   const navigate = useNavigate();
@@ -40,12 +41,12 @@ function UserLoginForm() {
   navigate("/student-dashboard");
 } else if (response.data.userRole === "mentor") {
   navigate("/mentor-dashboard");
-} 
+} toast.success(`${response.data.message}✅`);
      
       
 
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+    } catch (error) {
+       toast.error(`${error.response?.data?.message}❗` || "Login failed");
     }
   };
 

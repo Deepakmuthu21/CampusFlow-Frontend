@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthProvider";
+import { toast } from "react-toastify";
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -57,7 +58,7 @@ function Profile() {
     e.preventDefault();
 
     try {
-      await axios.put(
+     const res= await axios.put(
         `https://campus-folw-backend.onrender.com/api/user/update/${mentor._id}`,
         formData,
         {
@@ -66,12 +67,13 @@ function Profile() {
           },
         },
       );
+                  toast.success(res.data.msg);
+      
 
-      alert("Profile Updated Successfully");
       setEditMode(false);
       fetchProfile();
     } catch (error) {
-      console.log(error);
+             toast.error(`${error.res?.data?.message}❗`);
     }
   };
 

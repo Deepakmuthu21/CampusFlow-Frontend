@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 function MyTasksSection() {
   const [tasks, setTasks] = useState([]);
@@ -24,9 +25,9 @@ function MyTasksSection() {
           },
         },
       );
-      setTasks(res.data);
+            toast.success(res.data.msg);
     } catch (error) {
-      console.log(error);
+             toast.error(`${error.res?.data?.message}❗`);
     }
   };
 

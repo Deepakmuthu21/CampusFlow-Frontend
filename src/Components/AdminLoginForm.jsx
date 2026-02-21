@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { AuthContext } from "../Context/AuthProvider";
+import { toast } from 'react-toastify';
 
 function AdminLoginForm() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const handleSubmit = async (e) => {
 
     try {
       const response = await axios.post(
-        "https://campus-folw-backend.onrender.com/api/user/login",
+        "https://campus-folw-backend.onrender.com/api/user/login-admin",
         formData
       );
 
@@ -37,12 +38,12 @@ const handleSubmit = async (e) => {
 
      if (response.data.userRole === "admin") {
   navigate("/admin-dashboard");
-} 
+}   toast.success(`${response.data.message}✅`);
      
       
 
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+    } catch (error) {
+       toast.error(`${error.response?.data?.message}❗`)
     }
   };
 

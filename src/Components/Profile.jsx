@@ -3,7 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../Context/AuthProvider";
 
 function Profile() {
-  const [mentor, setMentor] = useState(null);
+  const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const token = localStorage.getItem("token");
   const getToken = () => {
@@ -11,11 +11,10 @@ function Profile() {
     return authData?.token;
   };
 
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    
+
     phone: "",
   });
 
@@ -25,15 +24,16 @@ function Profile() {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get("https://campus-folw-backend.onrender.com/api/user/mentor-dashboard", {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
+      const res = await axios.get(
+        "https://campus-folw-backend.onrender.com/api/user/mentor-dashboard",
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
         },
-      });
+      );
 
-     
-
-      setMentor(res.data.result);
+      setUser(res.data.result);
 
       setFormData({
         name: res.data.result.name,
@@ -57,11 +57,15 @@ function Profile() {
     e.preventDefault();
 
     try {
-      await axios.put(`https://campus-folw-backend.onrender.com/api/user/update/${mentor._id}`, formData, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
+      await axios.put(
+        `https://campus-folw-backend.onrender.com/api/user/update/${mentor._id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
         },
-      });
+      );
 
       alert("Profile Updated Successfully");
       setEditMode(false);
@@ -71,7 +75,7 @@ function Profile() {
     }
   };
 
-  if (!mentor) return <div>Loading...</div>;
+  if (!user) return <div>Loading...</div>;
 
   return (
     <div className="p-4 sm:p-6">
@@ -81,25 +85,31 @@ function Profile() {
         {!editMode ? (
           <>
             <p className="mb-3">
-              <strong>Name:</strong> {mentor.name}
+              <strong>Name:</strong> {user.name}
             </p>
             <p className="mb-3">
-              <strong>Email:</strong> {mentor.email}
+              <strong>Email:</strong> {user.email}
             </p>
             <p className="mb-3">
-              <strong>Phone:</strong> {mentor.phone}
+              <strong>Phone:</strong> {user.phone}
+            </p>
+            {user.registerNo && (
+              <p className="mb-3">
+                <strong>Register No:</strong> {user.registerNo}
+              </p>
+            )}
+
+            {user.course && (
+              <p className="mb-3">
+                <strong>Course:</strong> {user.course}
+              </p>
+            )}
+
+            <p className="mb-3">
+              <strong>Year:</strong> {user.year}
             </p>
             <p className="mb-3">
-              <strong>Register No:</strong> {mentor.registerNo}
-            </p>
-            <p className="mb-3">
-              <strong>Course:</strong> {mentor.course}
-            </p>
-            <p className="mb-3">
-              <strong>Year:</strong> {mentor.year}
-            </p>
-            <p className="mb-3">
-              <strong>Status:</strong> {mentor.status}
+              <strong>Status:</strong> {user.status}
             </p>
 
             <button
@@ -130,7 +140,6 @@ function Profile() {
               placeholder="Email"
               required
             />
-
 
             <input
               type="text"

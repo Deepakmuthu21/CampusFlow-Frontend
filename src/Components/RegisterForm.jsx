@@ -1,3 +1,4 @@
+import { data } from 'autoprefixer';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 
@@ -58,7 +59,8 @@ const fetchDepartment = async()=>{
         ...formData,
         role: "student",
         status:"pending"
-      });
+      })
+  
 
       alert("Registered Successfully ✅");
 

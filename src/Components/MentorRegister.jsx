@@ -55,7 +55,7 @@ const fetchDepartment = async()=>{
     }
 
     try {
-      await axios.post("http://localhost:5000/api/user/register", {
+      await axios.post("https://campus-folw-backend.onrender.com/api/user/register", {
         ...formData,
         role: "mentor",
         status:"pending"

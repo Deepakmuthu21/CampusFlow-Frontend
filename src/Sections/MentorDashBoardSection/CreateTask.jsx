@@ -20,7 +20,7 @@ function CreateTask() {
 
   const fetchTasks = async () => {
     try {
-      const res = await axios.get("https://campus-folw-backend.onrender.com/task/get-assignment-mentor",{
+      const res = await axios.get("https://campus-folw-backend.onrender.com/api/task/get-assignment-mentor",{
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
@@ -43,7 +43,7 @@ function CreateTask() {
     e.preventDefault();
 
     try {
-      await axios.post("https://campus-folw-backend.onrender.com/task/create-assignment",formData,{
+      await axios.post("https://campus-folw-backend.onrender.com/api/task/create-assignment",formData,{
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
@@ -59,7 +59,7 @@ function CreateTask() {
 
   const handleDelete = async(id)=>{
     try {
-      await axios.delete(`https://campus-folw-backend.onrender.com/task/delete-assignment-mentor/${id}`,{
+      await axios.delete(`https://campus-folw-backend.onrender.com/api/task/delete-assignment-mentor/${id}`,{
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
